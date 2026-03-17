@@ -1,10 +1,9 @@
 replicaCount: 1
-
 frontend:
   image:
     repository: ghcr.io/frobobbo/madden-records-frontend
     tag: latest
-    sha: ""
+    sha: "497b8ca"
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -16,12 +15,11 @@ frontend:
     limits:
       cpu: 200m
       memory: 128Mi
-
 backend:
   image:
     repository: ghcr.io/frobobbo/madden-records-backend
     tag: latest
-    sha: ""
+    sha: "497b8ca"
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -33,7 +31,6 @@ backend:
     limits:
       cpu: 500m
       memory: 256Mi
-
 postgresql:
   # Set to false to use an external PostgreSQL instance
   enabled: true
@@ -56,7 +53,6 @@ postgresql:
     limits:
       cpu: 500m
       memory: 512Mi
-
 # Used when postgresql.enabled is false
 externalDatabase:
   host: ""
@@ -64,14 +60,12 @@ externalDatabase:
   database: madden
   username: madden
   password: ""
-
 ingress:
   enabled: false
   className: nginx
   annotations: {}
   host: madden.example.com
   tls: []
-
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
