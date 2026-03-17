@@ -1,0 +1,75 @@
+replicaCount: 1
+
+frontend:
+  image:
+    repository: ghcr.io/frobobbo/madden-records-frontend
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+    port: 80
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 128Mi
+
+backend:
+  image:
+    repository: ghcr.io/frobobbo/madden-records-backend
+    tag: latest
+    pullPolicy: Always
+  service:
+    type: ClusterIP
+    port: 3001
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+
+postgresql:
+  # Set to false to use an external PostgreSQL instance
+  enabled: true
+  image:
+    repository: postgres
+    tag: 16-alpine
+  auth:
+    database: madden
+    username: madden
+    # Override with --set postgresql.auth.password=<value> or via a secret
+    password: changeme
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: ""
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+# Used when postgresql.enabled is false
+externalDatabase:
+  host: ""
+  port: 5432
+  database: madden
+  username: madden
+  password: ""
+
+ingress:
+  enabled: false
+  className: nginx
+  annotations: {}
+  host: madden.example.com
+  tls: []
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""

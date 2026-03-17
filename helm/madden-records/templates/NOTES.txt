@@ -1,0 +1,22 @@
+Madden Records has been deployed!
+
+{{- if .Values.ingress.enabled }}
+Access the app at: http{{ if .Values.ingress.tls }}s{{ end }}://{{ .Values.ingress.host }}
+{{- else }}
+To access the app, port-forward the frontend service:
+
+  kubectl port-forward svc/{{ include "madden-records.fullname" . }}-frontend 8080:80
+
+Then open http://localhost:8080
+{{- end }}
+
+To add this Helm repo:
+  helm repo add madden-records https://frobobbo.github.io/madden-records/charts
+  helm repo update
+
+To install:
+  helm install madden-records madden-records/madden-records \
+    --set postgresql.auth.password=<your-password>
+
+To upgrade:
+  helm upgrade madden-records madden-records/madden-records
