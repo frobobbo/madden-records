@@ -105,10 +105,14 @@ jobs:
           ref: main
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Write SHA tag into Helm values
+      - name: Install yq
+        uses: mikefarah/yq@v4
+
+      - name: Write SHA into Helm values
         run: |
           SHA=$(echo "${{ github.sha }}" | cut -c1-7)
-          sed -i "s/^\(\s*tag:\s*\).*/\1${SHA}/" helm/madden-records/values.yaml
+          yq -i ".frontend.image.sha = \"${SHA}\"" helm/madden-records/values.yaml
+          yq -i ".backend.image.sha = \"${SHA}\"" helm/madden-records/values.yaml
 
       - name: Commit and push updated values
         run: |

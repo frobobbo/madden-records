@@ -18,6 +18,8 @@ spec:
         app.kubernetes.io/name: {{ include "madden-records.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/component: frontend
+      annotations:
+        app.kubernetes.io/image-sha: {{ .Values.frontend.image.sha | quote }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
