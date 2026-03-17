@@ -35,6 +35,8 @@ spec:
                 secretKeyRef:
                   name: {{ include "madden-records.fullname" . }}-db
                   key: password
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
           volumeMounts:
             - name: data
               mountPath: /var/lib/postgresql/data
