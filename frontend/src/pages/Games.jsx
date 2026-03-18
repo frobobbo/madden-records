@@ -137,7 +137,7 @@ function GameCard({ game, onEdit, onDelete }) {
             <span>{dateStr}</span>
             <span className="text-white/60 text-xs">HOME</span>
           </div>
-          <div className="metallic-dark flex items-stretch">
+          <div className="metallic flex items-stretch">
             <TeamSide entry={left} winner={winner} side="left" />
             <div className="flex items-center justify-center px-3 shrink-0">
               <span className="text-gray-500 font-bold text-sm">vs</span>
