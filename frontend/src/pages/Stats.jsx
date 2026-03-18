@@ -32,12 +32,12 @@ export default function Stats({ games, players }) {
 function StatCard({ title, children }) {
   const rows = (Array.isArray(children) ? children : [children]).filter(Boolean);
   return (
-    <div className="rounded-xl overflow-hidden shadow-sm border border-gray-200">
+    <div className="rounded-xl overflow-hidden shadow-sm border border-gray-700">
       <div className="bg-blue-700 text-white text-sm font-semibold px-4 py-2">{title}</div>
       {rows.length ? rows.map((child, i) => (
-        <div key={i} className={i > 0 ? 'border-t border-gray-100' : ''}>{child}</div>
+        <div key={i} className={i > 0 ? 'border-t border-gray-700' : ''}>{child}</div>
       )) : (
-        <div className="px-4 py-3 bg-white text-gray-400 text-sm">No data yet</div>
+        <div className="px-4 py-3 bg-gray-800 text-gray-500 text-sm">No data yet</div>
       )}
     </div>
   );
@@ -45,26 +45,26 @@ function StatCard({ title, children }) {
 
 function TeamStatRow({ player, team, value }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-3 bg-white">
+    <div className="flex items-center gap-3 px-4 py-3 bg-gray-800">
       {team && <TeamLogo abbr={team.abbr} size={32} />}
       <div className="flex flex-col flex-1 min-w-0">
-        <span className="text-xs text-gray-500">{player}</span>
-        <span className="font-semibold text-sm text-gray-900 truncate">{team?.name ?? '—'}</span>
+        <span className="text-xs text-gray-400">{player}</span>
+        <span className="font-semibold text-sm text-gray-100 truncate">{team?.name ?? '—'}</span>
       </div>
-      <span className="text-xl font-bold text-gray-900">{value}</span>
+      <span className="text-xl font-bold text-white">{value}</span>
     </div>
   );
 }
 
 function ScoreStatRow({ player, value }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-3 bg-white">
-      <div className="w-8 h-8 bg-red-600 rounded flex items-center justify-center text-white font-black text-xs shrink-0">SB</div>
+    <div className="flex items-center gap-3 px-4 py-3 bg-gray-800">
+      <div className="w-8 h-8 bg-red-700 rounded flex items-center justify-center text-white font-black text-xs shrink-0">SB</div>
       <div className="flex flex-col flex-1">
-        <span className="text-xs text-gray-500">{player}</span>
-        <span className="text-sm font-medium text-gray-700">Points Scored</span>
+        <span className="text-xs text-gray-400">{player}</span>
+        <span className="text-sm font-medium text-gray-300">Points Scored</span>
       </div>
-      <span className="text-xl font-bold text-gray-900">{value}</span>
+      <span className="text-xl font-bold text-white">{value}</span>
     </div>
   );
 }
