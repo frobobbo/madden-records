@@ -1,6 +1,5 @@
-import { getTeamById } from '../data/teams';
+import { getTeamById, getTeamHelmetUrl } from '../data/teams';
 import { getRecords, getWinner } from '../utils/stats';
-import TeamLogo from '../components/TeamLogo';
 import { formatDate } from '../utils/date';
 
 export default function Home({ games, players, loading }) {
@@ -77,12 +76,13 @@ function LastGame({ game, records, players }) {
         {/* Main scoreboard */}
         <div className="relative z-10 flex items-center justify-between px-4 py-6 gap-2">
 
-          {/* Left player */}
+          {/* Left player (Away) — helmet faces right/inward */}
           <div className="flex-1 flex flex-col items-center gap-2">
-            <div style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.6))' }}>
+            <div style={{ filter: 'drop-shadow(0 6px 14px rgba(0,0,0,0.7))' }}>
               {teamA
-                ? <TeamLogo abbr={teamA.abbr} size={80} />
-                : <div className="w-20 h-20 rounded-full bg-black/30" />}
+                ? <img src={getTeamHelmetUrl(teamA.abbr, 'right')} alt={teamA.name}
+                    className="w-28 h-auto object-contain" />
+                : <div className="w-24 h-20 rounded bg-black/30" />}
             </div>
             <span className="text-white font-bold text-sm text-center drop-shadow">
               {entryA?.playerName}
@@ -106,12 +106,13 @@ function LastGame({ game, records, players }) {
             <div className="h-6 w-px bg-white/20" />
           </div>
 
-          {/* Right player */}
+          {/* Right player (Home) — helmet faces left/inward */}
           <div className="flex-1 flex flex-col items-center gap-2">
-            <div style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.6))' }}>
+            <div style={{ filter: 'drop-shadow(0 6px 14px rgba(0,0,0,0.7))' }}>
               {teamB
-                ? <TeamLogo abbr={teamB.abbr} size={80} />
-                : <div className="w-20 h-20 rounded-full bg-black/30" />}
+                ? <img src={getTeamHelmetUrl(teamB.abbr, 'left')} alt={teamB.name}
+                    className="w-28 h-auto object-contain" />
+                : <div className="w-24 h-20 rounded bg-black/30" />}
             </div>
             <span className="text-white font-bold text-sm text-center drop-shadow">
               {entryB?.playerName}
