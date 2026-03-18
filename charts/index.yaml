@@ -3,7 +3,27 @@ entries:
   madden-records:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-03-18T02:48:55.917087088Z"
+    created: "2026-03-18T02:54:28.137897934Z"
+    description: Madden Records – track head-to-head Madden game history
+    digest: 6adf37734924d0ed93d3aadcd253f20cd8d8d62f32800a7747095a6496cd3e8d
+    home: https://github.com/frobobbo/madden-records
+    keywords:
+    - madden
+    - football
+    - gaming
+    maintainers:
+    - name: frobobbo
+      url: https://github.com/frobobbo
+    name: madden-records
+    sources:
+    - https://github.com/frobobbo/madden-records
+    type: application
+    urls:
+    - https://frobobbo.github.io/madden-records/charts/madden-records-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-03-18T02:54:28.137516085Z"
     description: Madden Records – track head-to-head Madden game history
     digest: d57d8824fefa67cfda74fecbe2dbe99bd218fb770ae3c903c4fde5957fc14ce6
     home: https://github.com/frobobbo/madden-records
@@ -23,7 +43,7 @@ entries:
     version: 0.1.4
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-03-18T02:48:55.916341222Z"
+    created: "2026-03-18T02:54:28.137106474Z"
     description: Madden Records – track head-to-head Madden game history
     digest: f5076a6f7ad92ff5ddad070b359c269ed0f9cd0228df162b0e9ea940aeceb6b2
     home: https://github.com/frobobbo/madden-records
@@ -43,7 +63,7 @@ entries:
     version: 0.1.3
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-03-18T02:48:55.915921096Z"
+    created: "2026-03-18T02:54:28.136707092Z"
     description: Madden Records – track head-to-head Madden game history
     digest: b3500df8ba2fcb1990c31616c04d49172bb3033400bd2b3988bbe39e56918afb
     home: https://github.com/frobobbo/madden-records
@@ -63,7 +83,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-03-18T02:48:55.915448712Z"
+    created: "2026-03-18T02:54:28.136279257Z"
     description: Madden Records – track head-to-head Madden game history
     digest: 55e15a8f940e359f66ff80beb1b591a57c9f3d2a00318785d6508369d2cab4fd
     home: https://github.com/frobobbo/madden-records
@@ -81,4 +101,4 @@ entries:
     urls:
     - https://frobobbo.github.io/madden-records/charts/madden-records-0.1.1.tgz
     version: 0.1.1
-generated: "2026-03-18T02:48:55.914866131Z"
+generated: "2026-03-18T02:54:28.135685325Z"
