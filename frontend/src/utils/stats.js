@@ -202,8 +202,8 @@ export function getHeadToHead(games, players) {
   return result;
 }
 
-// Best team per player (min 2 games with that team): { [playerName]: { team, wins, total, pct } | null }
-export function getBestTeam(games, players) {
+// Best/worst team per player (min 2 games with that team): { [playerName]: { team, wins, total, pct } | null }
+function buildTeamRecord(games) {
   const teamRecord = {};
   for (const g of games) {
     const winner = getWinner(g);
@@ -214,12 +214,28 @@ export function getBestTeam(games, players) {
       if (winner?.playerId === e.playerId) teamRecord[e.playerName][e.teamId].wins++;
     }
   }
+  return teamRecord;
+}
 
+export function getBestTeam(games, players) {
+  const teamRecord = buildTeamRecord(games);
   const result = {};
   for (const p of players) {
     const entries = Object.entries(teamRecord[p.name] || {}).filter(([, v]) => v.total >= 2);
     if (!entries.length) { result[p.name] = null; continue; }
     const [teamId, stats] = entries.sort((a, b) => (b[1].wins / b[1].total) - (a[1].wins / a[1].total))[0];
+    result[p.name] = { team: getTeamById(teamId), wins: stats.wins, total: stats.total, pct: Math.round((stats.wins / stats.total) * 100) };
+  }
+  return result;
+}
+
+export function getWorstTeam(games, players) {
+  const teamRecord = buildTeamRecord(games);
+  const result = {};
+  for (const p of players) {
+    const entries = Object.entries(teamRecord[p.name] || {}).filter(([, v]) => v.total >= 2);
+    if (!entries.length) { result[p.name] = null; continue; }
+    const [teamId, stats] = entries.sort((a, b) => (a[1].wins / a[1].total) - (b[1].wins / b[1].total))[0];
     result[p.name] = { team: getTeamById(teamId), wins: stats.wins, total: stats.total, pct: Math.round((stats.wins / stats.total) * 100) };
   }
   return result;

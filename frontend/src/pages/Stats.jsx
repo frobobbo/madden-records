@@ -1,4 +1,4 @@
-import { getMostUsedTeam, getLeastUsedTeam, getAverageScore, getWinPercentage, getHeadToHead, getBestTeam } from '../utils/stats';
+import { getMostUsedTeam, getLeastUsedTeam, getAverageScore, getWinPercentage, getBestTeam, getWorstTeam } from '../utils/stats';
 import TeamLogo from '../components/TeamLogo';
 
 export default function Stats({ games, players }) {
@@ -6,8 +6,8 @@ export default function Stats({ games, players }) {
   const leastUsed = getLeastUsedTeam(games, players);
   const avgScore = getAverageScore(games, players);
   const winPct = getWinPercentage(games, players);
-  const headToHead = getHeadToHead(games, players);
   const bestTeam = getBestTeam(games, players);
+  const worstTeam = getWorstTeam(games, players);
 
   return (
     <div className="p-4 flex flex-col gap-5">
@@ -17,15 +17,15 @@ export default function Stats({ games, players }) {
         ))}
       </StatCard>
 
-      {players.length >= 2 && (
-        <StatCard title="Head to Head">
-          <HeadToHeadRow players={players} headToHead={headToHead} />
-        </StatCard>
-      )}
-
       <StatCard title="Best Team">
         {players.map(p => bestTeam[p.name] ? (
           <BestTeamRow key={p.id} player={p.name} data={bestTeam[p.name]} />
+        ) : null)}
+      </StatCard>
+
+      <StatCard title="Worst Team">
+        {players.map(p => worstTeam[p.name] ? (
+          <BestTeamRow key={p.id} player={p.name} data={worstTeam[p.name]} />
         ) : null)}
       </StatCard>
 
@@ -81,29 +81,6 @@ function WinPctRow({ player, data }) {
   );
 }
 
-function HeadToHeadRow({ players, headToHead }) {
-  if (players.length < 2) return null;
-  const [a, b] = players;
-  const record = headToHead[a.name]?.[b.name] || { wins: 0, losses: 0 };
-  const total = record.wins + record.losses;
-
-  return (
-    <div className="flex items-center metallic px-4 py-4 gap-2">
-      <div className="flex-1 flex flex-col items-center">
-        <span className="text-xs text-gray-400 mb-1">{a.name}</span>
-        <span className="text-4xl font-black text-white">{record.wins}</span>
-      </div>
-      <div className="flex flex-col items-center px-2">
-        <span className="text-gray-500 text-xs mb-1">{total} played</span>
-        <span className="text-gray-600 font-bold text-lg">VS</span>
-      </div>
-      <div className="flex-1 flex flex-col items-center">
-        <span className="text-xs text-gray-400 mb-1">{b.name}</span>
-        <span className="text-4xl font-black text-white">{record.losses}</span>
-      </div>
-    </div>
-  );
-}
 
 function BestTeamRow({ player, data }) {
   const { team, wins, total, pct } = data;
