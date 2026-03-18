@@ -4,11 +4,11 @@ export default function Header({ onAdd }) {
       <div className="flex items-center gap-1.5">
         <span className="text-3xl tracking-wide text-white">MADDEN</span>
         <span className="text-xl">🏈</span>
-        <span className="text-3xl tracking-wide text-blue-400">RECORDS</span>
+        <span className="text-3xl tracking-wide text-blue-700">RECORDS</span>
       </div>
       <button
         onClick={onAdd}
-        className="bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors"
+        className="bg-blue-900 hover:bg-blue-800 active:bg-blue-950 text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors"
       >
         Add
       </button>
