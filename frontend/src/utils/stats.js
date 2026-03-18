@@ -56,7 +56,10 @@ export function getCurrentStreak(games, players) {
 
 // Longest win streak per player: { [playerName]: number }
 export function getLongestWinStreak(games, players) {
-  const sorted = [...games].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const sorted = [...games].sort((a, b) => {
+    const dateDiff = new Date(a.date) - new Date(b.date);
+    return dateDiff !== 0 ? dateDiff : a.id - b.id;
+  });
   const result = {};
   for (const p of players) {
     let max = 0, current = 0;
