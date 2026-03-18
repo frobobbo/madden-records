@@ -1,22 +1,15 @@
-import { getMostUsedTeam, getLeastUsedTeam, getAverageScore, getWinPercentage, getBestTeam, getWorstTeam } from '../utils/stats';
+import { getMostUsedTeam, getLeastUsedTeam, getAverageScore, getBestTeam, getWorstTeam } from '../utils/stats';
 import TeamLogo from '../components/TeamLogo';
 
 export default function Stats({ games, players }) {
   const mostUsed = getMostUsedTeam(games, players);
   const leastUsed = getLeastUsedTeam(games, players);
   const avgScore = getAverageScore(games, players);
-  const winPct = getWinPercentage(games, players);
   const bestTeam = getBestTeam(games, players);
   const worstTeam = getWorstTeam(games, players);
 
   return (
     <div className="p-4 flex flex-col gap-5">
-      <StatCard title="Win Percentage">
-        {players.map(p => (
-          <WinPctRow key={p.id} player={p.name} data={winPct[p.name]} />
-        ))}
-      </StatCard>
-
       <StatCard title="Best Team">
         {players.map(p => bestTeam[p.name] ? (
           <BestTeamRow key={p.id} player={p.name} data={bestTeam[p.name]} />
@@ -64,22 +57,6 @@ function StatCard({ title, children }) {
   );
 }
 
-function WinPctRow({ player, data }) {
-  const { wins, losses, pct } = data || { wins: 0, losses: 0, pct: 0 };
-  const total = wins + losses;
-  return (
-    <div className="flex items-center gap-3 px-4 py-3 metallic">
-      <div className="w-8 h-8 bg-blue-800 rounded flex items-center justify-center shrink-0">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
-      </div>
-      <div className="flex flex-col flex-1 min-w-0">
-        <span className="text-xs text-gray-400">{player}</span>
-        <span className="text-sm font-medium text-gray-300">{total} Games · {wins}W {losses}L</span>
-      </div>
-      <span className="text-2xl font-bold text-white">{pct}%</span>
-    </div>
-  );
-}
 
 
 function BestTeamRow({ player, data }) {
