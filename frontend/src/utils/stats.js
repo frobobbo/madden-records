@@ -227,7 +227,10 @@ export function getBestTeam(games, players) {
 
 // Win streak per game (consecutive wins ending at that game): { [gameId]: number }
 export function getGameStreaks(games) {
-  const sorted = [...games].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const sorted = [...games].sort((a, b) => {
+    const dateDiff = new Date(a.date) - new Date(b.date);
+    return dateDiff !== 0 ? dateDiff : a.id - b.id;
+  });
   const running = {};
   const result = {};
 

@@ -135,7 +135,7 @@ function GameCard({ game, streak, onEdit, onDelete }) {
             style={{
               background: [
                 'linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12))',
-                `linear-gradient(90deg, ${getTeamById(left?.teamId)?.color ?? '#1e3a8a'} 0%, ${getTeamById(left?.teamId)?.color ?? '#1e3a8a'} 50%, ${getTeamById(right?.teamId)?.color ?? '#1e3a8a'} 50%, ${getTeamById(right?.teamId)?.color ?? '#1e3a8a'} 100%)`,
+                `linear-gradient(90deg, ${getTeamById(left?.teamId)?.color ?? '#1e3a8a'} 0%, ${getTeamById(left?.teamId)?.color ?? '#1e3a8a'} 25%, ${getTeamById(right?.teamId)?.color ?? '#1e3a8a'} 75%, ${getTeamById(right?.teamId)?.color ?? '#1e3a8a'} 100%)`,
               ].join(', '),
             }}
           >
