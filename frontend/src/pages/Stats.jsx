@@ -1,13 +1,34 @@
-import { getMostUsedTeam, getLeastUsedTeam, getAverageScore } from '../utils/stats';
+import { getMostUsedTeam, getLeastUsedTeam, getAverageScore, getWinPercentage, getHeadToHead, getBestTeam } from '../utils/stats';
 import TeamLogo from '../components/TeamLogo';
 
 export default function Stats({ games, players }) {
   const mostUsed = getMostUsedTeam(games, players);
   const leastUsed = getLeastUsedTeam(games, players);
   const avgScore = getAverageScore(games, players);
+  const winPct = getWinPercentage(games, players);
+  const headToHead = getHeadToHead(games, players);
+  const bestTeam = getBestTeam(games, players);
 
   return (
     <div className="p-4 flex flex-col gap-5">
+      <StatCard title="Win Percentage">
+        {players.map(p => (
+          <WinPctRow key={p.id} player={p.name} data={winPct[p.name]} />
+        ))}
+      </StatCard>
+
+      {players.length >= 2 && (
+        <StatCard title="Head to Head">
+          <HeadToHeadRow players={players} headToHead={headToHead} />
+        </StatCard>
+      )}
+
+      <StatCard title="Best Team">
+        {players.map(p => bestTeam[p.name] ? (
+          <BestTeamRow key={p.id} player={p.name} data={bestTeam[p.name]} />
+        ) : null)}
+      </StatCard>
+
       <StatCard title="Most Used Team">
         {players.map(p => mostUsed[p.name] ? (
           <TeamStatRow key={p.id} player={p.name} team={mostUsed[p.name].team} value={mostUsed[p.name].count} />
@@ -39,6 +60,64 @@ function StatCard({ title, children }) {
       )) : (
         <div className="px-4 py-3 metallic text-gray-500 text-sm">No data yet</div>
       )}
+    </div>
+  );
+}
+
+function WinPctRow({ player, data }) {
+  const { wins, losses, pct } = data || { wins: 0, losses: 0, pct: 0 };
+  const total = wins + losses;
+  return (
+    <div className="flex items-center gap-3 px-4 py-3 metallic">
+      <div className="w-8 h-8 bg-blue-800 rounded flex items-center justify-center shrink-0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+      </div>
+      <div className="flex flex-col flex-1 min-w-0">
+        <span className="text-xs text-gray-400">{player}</span>
+        <span className="text-sm font-medium text-gray-300">{total} Games · {wins}W {losses}L</span>
+      </div>
+      <span className="text-2xl font-bold text-white">{pct}%</span>
+    </div>
+  );
+}
+
+function HeadToHeadRow({ players, headToHead }) {
+  if (players.length < 2) return null;
+  const [a, b] = players;
+  const record = headToHead[a.name]?.[b.name] || { wins: 0, losses: 0 };
+  const total = record.wins + record.losses;
+
+  return (
+    <div className="flex items-center metallic px-4 py-4 gap-2">
+      <div className="flex-1 flex flex-col items-center">
+        <span className="text-xs text-gray-400 mb-1">{a.name}</span>
+        <span className="text-4xl font-black text-white">{record.wins}</span>
+      </div>
+      <div className="flex flex-col items-center px-2">
+        <span className="text-gray-500 text-xs mb-1">{total} played</span>
+        <span className="text-gray-600 font-bold text-lg">VS</span>
+      </div>
+      <div className="flex-1 flex flex-col items-center">
+        <span className="text-xs text-gray-400 mb-1">{b.name}</span>
+        <span className="text-4xl font-black text-white">{record.losses}</span>
+      </div>
+    </div>
+  );
+}
+
+function BestTeamRow({ player, data }) {
+  const { team, wins, total, pct } = data;
+  return (
+    <div className="flex items-center gap-3 px-4 py-3 metallic">
+      {team && <TeamLogo abbr={team.abbr} size={32} />}
+      <div className="flex flex-col flex-1 min-w-0">
+        <span className="text-xs text-gray-400">{player}</span>
+        <span className="font-semibold text-sm text-gray-100 truncate">{team?.name ?? '—'}</span>
+      </div>
+      <div className="flex flex-col items-end">
+        <span className="text-xl font-bold text-white">{pct}%</span>
+        <span className="text-xs text-gray-500">{wins}-{total - wins}</span>
+      </div>
     </div>
   );
 }

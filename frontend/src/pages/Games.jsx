@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { getTeamById } from '../data/teams';
-import { getWinner } from '../utils/stats';
+import { getWinner, getGameStreaks } from '../utils/stats';
 import TeamLogo from '../components/TeamLogo';
 import EditGameModal from '../components/EditGameModal';
 import { formatDate } from '../utils/date';
@@ -22,6 +22,8 @@ export default function Games({ games, loading, onUpdate, onDelete }) {
     );
   }
 
+  const streaks = getGameStreaks(games);
+
   return (
     <>
       <div className="p-4 flex flex-col gap-4">
@@ -29,6 +31,7 @@ export default function Games({ games, loading, onUpdate, onDelete }) {
           <GameCard
             key={game.id}
             game={game}
+            streak={streaks[game.id]}
             onEdit={() => setEditing(game)}
             onDelete={() => onDelete(game.id)}
           />
@@ -53,7 +56,7 @@ function awayHome(entries) {
   return [away, home];
 }
 
-function GameCard({ game, onEdit, onDelete }) {
+function GameCard({ game, streak, onEdit, onDelete }) {
   const winner = getWinner(game);
   const dateStr = formatDate(game.date);
   const [left, right] = awayHome(game.entries);
@@ -141,11 +144,11 @@ function GameCard({ game, onEdit, onDelete }) {
             <span className="text-white/60 text-xs">HOME</span>
           </div>
           <div className="metallic flex items-stretch">
-            <TeamSide entry={left} winner={winner} side="left" />
+            <TeamSide entry={left} winner={winner} side="left" streak={winner?.playerId === left?.playerId ? streak : null} />
             <div className="flex items-center justify-center px-3 shrink-0">
               <span className="text-gray-500 font-bold text-sm">vs</span>
             </div>
-            <TeamSide entry={right} winner={winner} side="right" />
+            <TeamSide entry={right} winner={winner} side="right" streak={winner?.playerId === right?.playerId ? streak : null} />
           </div>
         </div>
       </div>
@@ -160,11 +163,12 @@ function GameCard({ game, onEdit, onDelete }) {
   );
 }
 
-function TeamSide({ entry, winner, side }) {
+function TeamSide({ entry, winner, side, streak }) {
   if (!entry) return null;
   const team = getTeamById(entry.teamId);
   const isWinner = winner?.playerId === entry.playerId;
   const isLeft = side === 'left';
+  const showStreak = isWinner && streak >= 2;
 
   return (
     <div className={`flex-1 flex ${isLeft ? 'flex-row' : 'flex-row-reverse'} items-center gap-2 px-3 py-3`}>
@@ -173,6 +177,9 @@ function TeamSide({ entry, winner, side }) {
       </div>
       <div className={`flex flex-col flex-1 min-w-0 ${isLeft ? 'items-start' : 'items-end'}`}>
         <span className="text-gray-400 text-xs truncate">{entry.playerName}</span>
+        {showStreak && (
+          <span className="text-xs font-bold text-amber-400 mt-0.5">🔥 W{streak}</span>
+        )}
       </div>
       <span className={`text-3xl font-black shrink-0 ${isWinner ? 'text-white' : 'text-gray-500'}`}>
         {entry.score}

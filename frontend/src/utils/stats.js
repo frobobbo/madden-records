@@ -163,3 +163,84 @@ export function getAverageScore(games, players) {
   }
   return result;
 }
+
+// Win percentage per player: { [playerName]: { wins, losses, pct } }
+export function getWinPercentage(games, players) {
+  const records = getRecords(games, players);
+  const result = {};
+  for (const p of players) {
+    const { wins, losses } = records[p.name] || { wins: 0, losses: 0 };
+    const total = wins + losses;
+    result[p.name] = { wins, losses, pct: total ? Math.round((wins / total) * 100) : 0 };
+  }
+  return result;
+}
+
+// Head-to-head record: { [playerNameA]: { [playerNameB]: { wins, losses } } }
+export function getHeadToHead(games, players) {
+  const result = {};
+  for (const p of players) {
+    result[p.name] = {};
+    for (const q of players) {
+      if (p.id !== q.id) result[p.name][q.name] = { wins: 0, losses: 0 };
+    }
+  }
+
+  for (const g of games) {
+    const winner = getWinner(g);
+    if (!winner || g.entries.length < 2) continue;
+    for (const e of g.entries) {
+      for (const f of g.entries) {
+        if (e.playerId === f.playerId) continue;
+        if (!result[e.playerName]) result[e.playerName] = {};
+        if (!result[e.playerName][f.playerName]) result[e.playerName][f.playerName] = { wins: 0, losses: 0 };
+        if (winner.playerId === e.playerId) result[e.playerName][f.playerName].wins++;
+        else if (winner.playerId === f.playerId) result[e.playerName][f.playerName].losses++;
+      }
+    }
+  }
+  return result;
+}
+
+// Best team per player (min 2 games with that team): { [playerName]: { team, wins, total, pct } | null }
+export function getBestTeam(games, players) {
+  const teamRecord = {};
+  for (const g of games) {
+    const winner = getWinner(g);
+    for (const e of g.entries) {
+      if (!teamRecord[e.playerName]) teamRecord[e.playerName] = {};
+      if (!teamRecord[e.playerName][e.teamId]) teamRecord[e.playerName][e.teamId] = { wins: 0, total: 0 };
+      teamRecord[e.playerName][e.teamId].total++;
+      if (winner?.playerId === e.playerId) teamRecord[e.playerName][e.teamId].wins++;
+    }
+  }
+
+  const result = {};
+  for (const p of players) {
+    const entries = Object.entries(teamRecord[p.name] || {}).filter(([, v]) => v.total >= 2);
+    if (!entries.length) { result[p.name] = null; continue; }
+    const [teamId, stats] = entries.sort((a, b) => (b[1].wins / b[1].total) - (a[1].wins / a[1].total))[0];
+    result[p.name] = { team: getTeamById(teamId), wins: stats.wins, total: stats.total, pct: Math.round((stats.wins / stats.total) * 100) };
+  }
+  return result;
+}
+
+// Win streak per game (consecutive wins ending at that game): { [gameId]: number }
+export function getGameStreaks(games) {
+  const sorted = [...games].sort((a, b) => new Date(a.date) - new Date(b.date));
+  const running = {};
+  const result = {};
+
+  for (const g of sorted) {
+    const winner = getWinner(g);
+    for (const e of g.entries) {
+      if (winner?.playerId === e.playerId) {
+        running[e.playerId] = (running[e.playerId] || 0) + 1;
+      } else {
+        running[e.playerId] = 0;
+      }
+    }
+    if (winner) result[g.id] = running[winner.playerId];
+  }
+  return result;
+}
