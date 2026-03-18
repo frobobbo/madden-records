@@ -68,7 +68,9 @@ function LastGame({ game, records, streaks, players }) {
       <div
         className="relative"
         style={{
-          background: 'repeating-linear-gradient(180deg,#1a5c2a 0px,#1a5c2a 30px,#1e6e30 30px,#1e6e30 60px)',
+          backgroundImage: 'url(/field.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
         }}
       >
         {/* Yard lines */}
