@@ -3,6 +3,7 @@ import { getTeamById } from '../data/teams';
 import { getWinner } from '../utils/stats';
 import TeamLogo from '../components/TeamLogo';
 import EditGameModal from '../components/EditGameModal';
+import { formatDate } from '../utils/date';
 
 export default function Games({ games, loading, onUpdate, onDelete }) {
   const [editing, setEditing] = useState(null);
@@ -26,7 +27,6 @@ export default function Games({ games, loading, onUpdate, onDelete }) {
             key={game.id}
             game={game}
             onEdit={() => setEditing(game)}
-            onDelete={() => onDelete(game.id)}
           />
         ))}
       </div>
@@ -35,6 +35,7 @@ export default function Games({ games, loading, onUpdate, onDelete }) {
         <EditGameModal
           game={editing}
           onSave={onUpdate}
+          onDelete={id => { onDelete(id); setEditing(null); }}
           onClose={() => setEditing(null)}
         />
       )}
@@ -42,11 +43,9 @@ export default function Games({ games, loading, onUpdate, onDelete }) {
   );
 }
 
-function GameCard({ game, onEdit, onDelete }) {
+function GameCard({ game, onEdit }) {
   const winner = getWinner(game);
-  const dateStr = new Date(game.date + 'T00:00:00').toLocaleDateString('en-US', {
-    month: 'numeric', day: 'numeric', year: 'numeric',
-  });
+  const dateStr = formatDate(game.date);
 
   const sorted = [...game.entries].sort((a, b) => b.score - a.score);
 
@@ -54,10 +53,7 @@ function GameCard({ game, onEdit, onDelete }) {
     <div className="rounded-xl overflow-hidden shadow-sm border border-gray-200">
       <div className="bg-blue-700 text-white text-sm font-semibold px-4 py-2 flex justify-between items-center">
         <span>Game Played: {dateStr}</span>
-        <div className="flex gap-3">
-          <button onClick={onEdit} className="text-blue-200 hover:text-white text-xs" aria-label="Edit game">✎</button>
-          <button onClick={onDelete} className="text-blue-200 hover:text-white text-xs" aria-label="Delete game">✕</button>
-        </div>
+        <button onClick={onEdit} className="text-blue-200 hover:text-white text-xs" aria-label="Edit game">✎</button>
       </div>
       {sorted.map((entry, i) => {
         const team = getTeamById(entry.teamId);

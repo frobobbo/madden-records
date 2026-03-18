@@ -1,6 +1,7 @@
 import { getTeamById } from '../data/teams';
 import { getRecords, getWinner } from '../utils/stats';
 import TeamLogo from '../components/TeamLogo';
+import { formatDate } from '../utils/date';
 
 export default function Home({ games, players, loading }) {
   const last = games[0] ?? null;
@@ -25,9 +26,7 @@ export default function Home({ games, players, loading }) {
 
 function LastGame({ game, records, players }) {
   const winner = getWinner(game);
-  const dateStr = new Date(game.date + 'T00:00:00').toLocaleDateString('en-US', {
-    month: 'numeric', day: 'numeric', year: 'numeric',
-  });
+  const dateStr = formatDate(game.date);
 
   return (
     <>

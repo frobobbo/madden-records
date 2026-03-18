@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NFL_TEAMS, getTeamLogoUrl } from '../data/teams';
 
-export default function EditGameModal({ game, onSave, onClose }) {
+export default function EditGameModal({ game, onSave, onDelete, onClose }) {
   const [date, setDate] = useState(game.date.slice(0, 10));
   const [entries, setEntries] = useState(
     game.entries.map(e => ({ playerId: e.playerId, playerName: e.playerName, teamId: e.teamId, score: String(e.score) }))
@@ -56,6 +56,11 @@ export default function EditGameModal({ game, onSave, onClose }) {
           <button type="submit" disabled={saving}
             className="bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white font-semibold py-3 rounded-xl text-base transition-colors">
             {saving ? 'Saving...' : 'Update Game'}
+          </button>
+          <button type="button"
+            onClick={() => { if (confirm('Delete this game? This cannot be undone.')) onDelete(game.id); }}
+            className="text-red-500 hover:text-red-700 font-semibold py-2 text-sm transition-colors">
+            Delete Game
           </button>
         </form>
       </div>

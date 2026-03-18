@@ -22,6 +22,7 @@ export default function Players({ players, loading, onAdd, onUpdate, onDelete })
     if (!confirm(`Delete player "${player.name}"? This will also delete all their game entries.`)) return;
     try {
       await onDelete(player.id);
+      setModal(null);
     } catch (e) {
       alert(e.message);
     }
@@ -61,11 +62,6 @@ export default function Players({ players, loading, onAdd, onUpdate, onDelete })
                   className="text-gray-400 hover:text-blue-600 px-2 py-1 text-sm"
                   aria-label="Edit player"
                 >✎</button>
-                <button
-                  onClick={() => handleDelete(p)}
-                  className="text-gray-400 hover:text-red-500 px-2 py-1 text-sm"
-                  aria-label="Delete player"
-                >✕</button>
               </div>
             ))}
           </div>
@@ -78,6 +74,7 @@ export default function Players({ players, loading, onAdd, onUpdate, onDelete })
           title={modal === 'add' ? 'Add Player' : 'Edit Player'}
           error={error}
           onSave={handleSave}
+          onDelete={modal !== 'add' ? () => handleDelete(modal) : null}
           onClose={() => setModal(null)}
         />
       )}
@@ -85,7 +82,7 @@ export default function Players({ players, loading, onAdd, onUpdate, onDelete })
   );
 }
 
-function PlayerModal({ initial, title, error, onSave, onClose }) {
+function PlayerModal({ initial, title, error, onSave, onDelete, onClose }) {
   const [name, setName] = useState(initial);
   const [saving, setSaving] = useState(false);
 
@@ -118,6 +115,13 @@ function PlayerModal({ initial, title, error, onSave, onClose }) {
             className="bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white font-semibold py-3 rounded-xl text-base transition-colors">
             {saving ? 'Saving...' : 'Save'}
           </button>
+          {onDelete && (
+            <button type="button"
+              onClick={onDelete}
+              className="text-red-500 hover:text-red-700 font-semibold py-2 text-sm transition-colors">
+              Delete Player
+            </button>
+          )}
         </form>
       </div>
     </div>
