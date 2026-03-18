@@ -27,6 +27,19 @@ body {
   );
 }
 
+/* Firework particle burst */
+@keyframes fw-particle {
+  0%   { transform: translate(0, 0) scale(0); opacity: 0; }
+  10%  { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0.2); opacity: 0; }
+}
+
+/* Record toast entrance */
+@keyframes toast-enter {
+  0%   { transform: scale(0.75) translateY(40px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
 /* Metallic dark — nav, scoreboard body */
 .metallic-dark {
   background: linear-gradient(180deg,

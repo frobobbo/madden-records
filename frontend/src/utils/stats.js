@@ -244,6 +244,35 @@ export function getWorstTeam(games, players) {
   return result;
 }
 
+// Check which records were broken — compare games before/after an add.
+// Returns array of { emoji, label, player, value }
+export function checkNewRecords(prevGames, nextGames, players) {
+  const broken = [];
+
+  const prevStreaks = getLongestWinStreak(prevGames, players);
+  const nextStreaks = getLongestWinStreak(nextGames, players);
+  for (const p of players) {
+    if ((nextStreaks[p.name] ?? 0) > (prevStreaks[p.name] ?? 0))
+      broken.push({ emoji: '🔥', label: 'Longest Win Streak', player: p.name, value: `${nextStreaks[p.name]} Games` });
+  }
+
+  const prevMargins = getLargestMargin(prevGames, players);
+  const nextMargins = getLargestMargin(nextGames, players);
+  for (const p of players) {
+    if ((nextMargins[p.name] ?? 0) > (prevMargins[p.name] ?? 0))
+      broken.push({ emoji: '💪', label: 'Biggest Margin of Victory', player: p.name, value: `${nextMargins[p.name]} Points` });
+  }
+
+  const prevPoints = getMostPointsScored(prevGames, players);
+  const nextPoints = getMostPointsScored(nextGames, players);
+  for (const p of players) {
+    if ((nextPoints[p.name] ?? 0) > (prevPoints[p.name] ?? 0))
+      broken.push({ emoji: '🏆', label: 'New High Score', player: p.name, value: `${nextPoints[p.name]} Points` });
+  }
+
+  return broken;
+}
+
 // Win streak per game (consecutive wins ending at that game): { [gameId]: number }
 export function getGameStreaks(games) {
   const sorted = [...games].sort((a, b) => {

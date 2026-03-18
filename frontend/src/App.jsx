@@ -5,16 +5,27 @@ import { usePlayers } from './hooks/usePlayers';
 import Header from './components/Header';
 import BottomNav from './components/BottomNav';
 import AddGameModal from './components/AddGameModal';
+import RecordToast from './components/RecordToast';
 import Home from './pages/Home';
 import Records from './pages/Records';
 import Games from './pages/Games';
 import Stats from './pages/Stats';
 import Players from './pages/Players';
+import { checkNewRecords } from './utils/stats';
 
 export default function App() {
   const { games, loading: gamesLoading, addGame, updateGame, deleteGame } = useGames();
   const { players, loading: playersLoading, addPlayer, updatePlayer, deletePlayer } = usePlayers();
   const [showAdd, setShowAdd] = useState(false);
+  const [brokenRecords, setBrokenRecords] = useState(null);
+
+  async function handleAddGame(data) {
+    const prevGames = games;
+    const newGame = await addGame(data);
+    setShowAdd(false);
+    const broken = checkNewRecords(prevGames, [newGame, ...prevGames], players);
+    if (broken.length) setBrokenRecords(broken);
+  }
 
   return (
     <BrowserRouter>
@@ -41,8 +52,12 @@ export default function App() {
 
         <BottomNav />
 
+        {brokenRecords && (
+          <RecordToast records={brokenRecords} onDismiss={() => setBrokenRecords(null)} />
+        )}
+
         {showAdd && players.length >= 2 && (
-          <AddGameModal players={players} onAdd={addGame} onClose={() => setShowAdd(false)} />
+          <AddGameModal players={players} onAdd={handleAddGame} onClose={() => setShowAdd(false)} />
         )}
         {showAdd && players.length < 2 && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-6" onClick={() => setShowAdd(false)}>
