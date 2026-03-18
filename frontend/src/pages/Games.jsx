@@ -130,7 +130,10 @@ function GameCard({ game, onEdit, onDelete }) {
           <div
             className="text-white text-sm font-semibold px-4 py-2 flex justify-between items-center"
             style={{
-              background: `linear-gradient(90deg, ${getTeamById(left?.teamId)?.color ?? '#1e3a8a'}dd 0%, ${getTeamById(left?.teamId)?.color ?? '#1e3a8a'}dd 50%, ${getTeamById(right?.teamId)?.color ?? '#1e3a8a'}dd 50%, ${getTeamById(right?.teamId)?.color ?? '#1e3a8a'}dd 100%)`,
+              background: [
+                'linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12))',
+                `linear-gradient(90deg, ${getTeamById(left?.teamId)?.color ?? '#1e3a8a'} 0%, ${getTeamById(left?.teamId)?.color ?? '#1e3a8a'} 50%, ${getTeamById(right?.teamId)?.color ?? '#1e3a8a'} 50%, ${getTeamById(right?.teamId)?.color ?? '#1e3a8a'} 100%)`,
+              ].join(', '),
             }}
           >
             <span className="text-white/60 text-xs">AWAY</span>
