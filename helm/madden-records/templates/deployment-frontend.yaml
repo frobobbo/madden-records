@@ -29,6 +29,9 @@ spec:
         - name: frontend
           image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag }}"
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
+          env:
+            - name: BACKEND_HOST
+              value: {{ include "madden-records.fullname" . }}-backend
           ports:
             - containerPort: 80
           livenessProbe:

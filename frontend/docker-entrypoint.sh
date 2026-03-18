@@ -11,9 +11,17 @@ fi
 
 echo "Using DNS resolver: $RESOLVER"
 
-# Substitute ${RESOLVER} in the nginx config template
+# BACKEND_HOST must be set by the container runtime
+if [ -z "$BACKEND_HOST" ]; then
+  echo "ERROR: BACKEND_HOST environment variable is not set" >&2
+  exit 1
+fi
+
+echo "Using backend host: $BACKEND_HOST"
+
+# Substitute ${RESOLVER} and ${BACKEND_HOST} in the nginx config template
 export RESOLVER
-envsubst '${RESOLVER}' \
+envsubst '${RESOLVER} ${BACKEND_HOST}' \
   < /etc/nginx/conf.d/default.conf.template \
   > /etc/nginx/conf.d/default.conf
 

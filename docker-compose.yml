@@ -32,6 +32,8 @@ services:
   frontend:
     build: ./frontend
     restart: unless-stopped
+    environment:
+      BACKEND_HOST: backend
     ports:
       - "${APP_PORT:-8080}:80"
     depends_on:
