@@ -59,7 +59,7 @@ export default function Players({ players, loading, onAdd, onUpdate, onDelete })
                 <span className="flex-1 font-medium text-gray-100">{p.name}</span>
                 <button
                   onClick={() => { setError(''); setModal({ id: p.id, name: p.name }); }}
-                  className="text-gray-500 hover:text-blue-400 px-2 py-1 text-sm"
+                  className="text-gray-500 hover:text-sky-400 px-2 py-1 text-sm"
                   aria-label="Edit player"
                 >✎</button>
               </div>
@@ -129,5 +129,5 @@ function PlayerModal({ initial, title, error, onSave, onDelete, onClose }) {
 }
 
 function Spinner() {
-  return <div className="flex justify-center mt-20"><div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" /></div>;
+  return <div className="flex justify-center mt-20"><div className="w-8 h-8 border-4 border-sky-500 border-t-transparent rounded-full animate-spin" /></div>;
 }

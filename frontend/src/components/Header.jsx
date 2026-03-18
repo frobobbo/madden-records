@@ -1,20 +1,30 @@
 export default function Header({ onAdd }) {
   return (
     <header
-      className="metallic-dark flex items-center justify-between px-4 py-3 border-b border-gray-700 sticky top-0 z-10"
-      style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}
+      className="sticky top-0 z-10 overflow-hidden"
+      style={{ background: '#060d1c', paddingTop: 'env(safe-area-inset-top)' }}
     >
-      <div className="flex items-center gap-1.5">
-        <span className="text-3xl tracking-wide text-white">MADDEN</span>
-        <span className="text-xl">🏈</span>
-        <span className="text-3xl tracking-wide text-blue-700">RECORDS</span>
+      <div className="relative" style={{ height: 88 }}>
+        <img
+          src="/banner.png"
+          alt="Madden Records"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          draggable={false}
+        />
+        {/* subtle right-side fade so the Add button stays readable */}
+        <div
+          className="absolute inset-y-0 right-0 w-28"
+          style={{ background: 'linear-gradient(to left, rgba(6,13,28,0.75) 0%, transparent 100%)' }}
+        />
+        <div className="absolute inset-0 flex items-center justify-end px-3">
+          <button
+            onClick={onAdd}
+            className="bg-red-700 active:bg-red-600 text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors shadow-lg"
+          >
+            Add
+          </button>
+        </div>
       </div>
-      <button
-        onClick={onAdd}
-        className="bg-blue-900 hover:bg-blue-800 active:bg-blue-950 text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors"
-      >
-        Add
-      </button>
     </header>
   );
 }

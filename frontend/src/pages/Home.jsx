@@ -165,7 +165,7 @@ function LastGame({ game, records, streaks, players }) {
                     <span className="text-xs font-bold text-orange-400">🔥 {streak}</span>
                   )}
                   {streak <= -3 && (
-                    <span className="text-xs font-bold text-blue-400">🥶 {Math.abs(streak)}</span>
+                    <span className="text-xs font-bold text-sky-400">🥶 {Math.abs(streak)}</span>
                   )}
                 </div>
                 <span className="text-white font-mono font-bold text-sm">
@@ -183,7 +183,7 @@ function LastGame({ game, records, streaks, players }) {
 function LoadingSpinner() {
   return (
     <div className="flex justify-center mt-20">
-      <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+      <div className="w-8 h-8 border-4 border-sky-500 border-t-transparent rounded-full animate-spin" />
     </div>
   );
 }

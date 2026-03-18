@@ -24,7 +24,7 @@ function RecordCard({ title, data, format }) {
   const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]);
   return (
     <div className="rounded-xl overflow-hidden shadow-sm border border-gray-700">
-      <div className="bg-blue-900 text-white text-sm font-semibold px-4 py-2">{title}</div>
+      <div className="bg-blue-950 text-white text-sm font-semibold px-4 py-2">{title}</div>
       {sorted.map(([player, value], i) => (
         <div key={player} className={`flex items-center gap-3 px-4 py-3 metallic ${i > 0 ? 'border-t border-gray-700' : ''}`}>
           <TrophyIcon gold={i === 0} />

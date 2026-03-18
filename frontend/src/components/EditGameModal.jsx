@@ -68,7 +68,7 @@ export default function EditGameModal({ game, onSave, onDelete, onClose }) {
           ))}
           {error && <p className="text-red-400 text-sm">{error}</p>}
           <button type="submit" disabled={saving}
-            className="bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-semibold py-3 rounded-xl text-base transition-colors">
+            className="bg-red-700 hover:bg-red-600 disabled:opacity-50 text-white font-semibold py-3 rounded-xl text-base transition-colors">
             {saving ? 'Saving...' : 'Update Game'}
           </button>
           <button type="button"

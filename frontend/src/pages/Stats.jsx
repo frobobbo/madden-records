@@ -54,7 +54,7 @@ function StatCard({ title, children }) {
   const rows = (Array.isArray(children) ? children : [children]).filter(Boolean);
   return (
     <div className="rounded-xl overflow-hidden shadow-sm border border-gray-700">
-      <div className="bg-blue-900 text-white text-sm font-semibold px-4 py-2">{title}</div>
+      <div className="bg-blue-950 text-white text-sm font-semibold px-4 py-2">{title}</div>
       {rows.length ? rows.map((child, i) => (
         <div key={i} className={i > 0 ? 'border-t border-gray-700' : ''}>{child}</div>
       )) : (
