@@ -27,44 +27,129 @@ export default function Home({ games, players, loading }) {
 function LastGame({ game, records, players }) {
   const winner = getWinner(game);
   const dateStr = formatDate(game.date);
+  const [entryA, entryB] = game.entries;
+  const teamA = getTeamById(entryA?.teamId);
+  const teamB = getTeamById(entryB?.teamId);
+  const aWins = winner?.playerId === entryA?.playerId;
+  const bWins = winner?.playerId === entryB?.playerId;
 
   return (
-    <>
-      <div className="bg-blue-700 text-white text-center font-bold text-lg py-3 rounded-t-xl">
-        Last Game: {dateStr}
-      </div>
-      <div className="bg-gray-800 rounded-b-xl shadow-sm border border-t-0 border-gray-700 p-5">
-        <div className="flex items-center justify-around flex-wrap gap-4">
-          {game.entries.map((entry) => {
-            const team = getTeamById(entry.teamId);
-            const isWinner = winner?.playerId === entry.playerId;
-            return (
-              <div key={entry.playerId} className="flex flex-col items-center gap-2">
-                <span className={`font-bold text-base ${isWinner ? 'text-blue-400' : 'text-gray-400'}`}>
-                  {entry.playerName}
-                </span>
-                {team && <TeamLogo abbr={team.abbr} size={56} />}
-                <span className={`text-4xl font-black ${isWinner ? 'text-white' : 'text-gray-500'}`}>
-                  {entry.score}
-                </span>
-              </div>
-            );
-          })}
+    <div className="rounded-xl overflow-hidden shadow-xl border border-gray-700">
+
+      {/* ── Football field ── */}
+      <div
+        className="relative"
+        style={{
+          background: 'repeating-linear-gradient(180deg,#1a5c2a 0px,#1a5c2a 30px,#1e6e30 30px,#1e6e30 60px)',
+        }}
+      >
+        {/* Horizontal yard lines */}
+        <div className="absolute inset-0 pointer-events-none flex flex-col justify-evenly">
+          {[0,1,2,3].map(i => (
+            <div key={i} className="w-full border-t border-white/10" />
+          ))}
         </div>
 
-        <div className="mt-5 border-t border-gray-700 pt-4">
-          <p className="text-center text-sm font-medium text-gray-500 mb-2">Player Records:</p>
-          <div className="flex flex-col gap-1 text-sm text-gray-300">
-            {players.map(p => (
-              <div key={p.id} className="flex justify-between">
-                <span>{p.name}:</span>
-                <span className="font-mono">({records[p.name]?.wins ?? 0} - {records[p.name]?.losses ?? 0})</span>
-              </div>
-            ))}
+        {/* Centre field line */}
+        <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-white/20 pointer-events-none" />
+
+        {/* Hash marks */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[25,50,75].map(pct => (
+            <div key={pct} className="absolute inset-y-0 flex flex-col justify-evenly"
+              style={{ left: `${pct}%` }}>
+              {[0,1,2,3,4].map(i => (
+                <div key={i} className="w-2 h-px bg-white/20" />
+              ))}
+            </div>
+          ))}
+        </div>
+
+        {/* Date bar */}
+        <div className="relative z-10 bg-black/50 text-center py-1.5 px-4">
+          <span className="text-white/80 text-xs font-semibold tracking-widest uppercase">
+            Last Game · {dateStr}
+          </span>
+        </div>
+
+        {/* Main scoreboard */}
+        <div className="relative z-10 flex items-center justify-between px-4 py-6 gap-2">
+
+          {/* Left player */}
+          <div className="flex-1 flex flex-col items-center gap-2">
+            <div style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.6))' }}>
+              {teamA
+                ? <TeamLogo abbr={teamA.abbr} size={80} />
+                : <div className="w-20 h-20 rounded-full bg-black/30" />}
+            </div>
+            <span className="text-white font-bold text-sm text-center drop-shadow">
+              {entryA?.playerName}
+            </span>
+            <span
+              className="font-black drop-shadow-lg"
+              style={{
+                fontSize: '3.5rem',
+                lineHeight: 1,
+                color: aWins ? '#ffffff' : 'rgba(255,255,255,0.3)',
+                textShadow: aWins ? '0 0 20px rgba(255,255,255,0.4)' : 'none',
+              }}
+            >
+              {entryA?.score}
+            </span>
+          </div>
+
+          {/* Centre label */}
+          <div className="flex flex-col items-center gap-1 shrink-0">
+            <span className="text-white/40 text-xs font-bold tracking-widest">FINAL</span>
+            <div className="h-6 w-px bg-white/20" />
+          </div>
+
+          {/* Right player */}
+          <div className="flex-1 flex flex-col items-center gap-2">
+            <div style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.6))' }}>
+              {teamB
+                ? <TeamLogo abbr={teamB.abbr} size={80} />
+                : <div className="w-20 h-20 rounded-full bg-black/30" />}
+            </div>
+            <span className="text-white font-bold text-sm text-center drop-shadow">
+              {entryB?.playerName}
+            </span>
+            <span
+              className="font-black drop-shadow-lg"
+              style={{
+                fontSize: '3.5rem',
+                lineHeight: 1,
+                color: bWins ? '#ffffff' : 'rgba(255,255,255,0.3)',
+                textShadow: bWins ? '0 0 20px rgba(255,255,255,0.4)' : 'none',
+              }}
+            >
+              {entryB?.score}
+            </span>
           </div>
         </div>
+
+        {/* End-zone tint strips */}
+        <div className="absolute inset-y-0 left-0 w-8 bg-black/15 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-8 bg-black/15 pointer-events-none" />
       </div>
-    </>
+
+      {/* ── Records panel ── */}
+      <div className="bg-gray-800 px-5 py-4 border-t border-gray-700">
+        <p className="text-center text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
+          Season Record
+        </p>
+        <div className="flex flex-col gap-2">
+          {players.map(p => (
+            <div key={p.id} className="flex justify-between items-center">
+              <span className="text-gray-300 text-sm">{p.name}</span>
+              <span className="text-white font-mono font-bold text-sm">
+                {records[p.name]?.wins ?? 0} – {records[p.name]?.losses ?? 0}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
