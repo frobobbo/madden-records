@@ -47,32 +47,50 @@ function GameCard({ game, onEdit }) {
   const winner = getWinner(game);
   const dateStr = formatDate(game.date);
 
-  const sorted = [...game.entries].sort((a, b) => b.score - a.score);
+  // Always show exactly two entries side-by-side
+  const [left, right] = game.entries;
 
   return (
     <div className="rounded-xl overflow-hidden shadow-sm border border-gray-200">
+      {/* Header */}
       <div className="bg-blue-700 text-white text-sm font-semibold px-4 py-2 flex justify-between items-center">
-        <span>Game Played: {dateStr}</span>
+        <span>{dateStr}</span>
         <button onClick={onEdit} className="text-blue-200 hover:text-white text-xs" aria-label="Edit game">✎</button>
       </div>
-      {sorted.map((entry, i) => {
-        const team = getTeamById(entry.teamId);
-        const isWinner = winner?.playerId === entry.playerId;
-        return (
-          <div key={entry.playerId} className={`flex items-center gap-3 px-4 py-3 bg-white ${i > 0 ? 'border-t border-gray-100' : ''}`}>
-            {team && <TeamLogo abbr={team.abbr} size={32} />}
-            <div className="flex flex-col flex-1 min-w-0">
-              <span className="text-xs text-gray-500">{entry.playerName}</span>
-              <span className={`font-semibold text-sm truncate ${isWinner ? 'text-gray-900' : 'text-gray-600'}`}>
-                {team?.name ?? 'Unknown'}
-              </span>
-            </div>
-            <span className={`text-xl font-bold ${isWinner ? 'text-gray-900' : 'text-gray-400'}`}>
-              {entry.score}
-            </span>
-          </div>
-        );
-      })}
+
+      {/* Scoreboard row */}
+      <div className="bg-gray-900 flex items-stretch">
+        <TeamSide entry={left} winner={winner} side="left" />
+        <div className="flex items-center justify-center px-3 shrink-0">
+          <span className="text-gray-500 font-bold text-sm">vs</span>
+        </div>
+        <TeamSide entry={right} winner={winner} side="right" />
+      </div>
+    </div>
+  );
+}
+
+function TeamSide({ entry, winner, side }) {
+  if (!entry) return null;
+  const team = getTeamById(entry.teamId);
+  const isWinner = winner?.playerId === entry.playerId;
+  const isLeft = side === 'left';
+
+  return (
+    <div className={`flex-1 flex ${isLeft ? 'flex-row' : 'flex-row-reverse'} items-center gap-2 px-3 py-3`}>
+      {/* Logo */}
+      <div className="shrink-0">
+        {team ? <TeamLogo abbr={team.abbr} size={40} /> : <div className="w-10 h-10 bg-gray-700 rounded-full" />}
+      </div>
+      {/* Name + team */}
+      <div className={`flex flex-col flex-1 min-w-0 ${isLeft ? 'items-start' : 'items-end'}`}>
+        <span className="text-gray-400 text-xs truncate">{entry.playerName}</span>
+        <span className="text-gray-300 text-xs truncate">{team?.name ?? 'Unknown'}</span>
+      </div>
+      {/* Score */}
+      <span className={`text-3xl font-black shrink-0 ${isWinner ? 'text-white' : 'text-gray-500'}`}>
+        {entry.score}
+      </span>
     </div>
   );
 }
