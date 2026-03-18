@@ -142,14 +142,14 @@ The import file is a simple JSON structure. You can also create one manually:
 ```json
 {
   "players": [
-    { "name": "Brett Johnson" },
-    { "name": "Scott Johnson" }
+    { "name": "Player1" },
+    { "name": "Player2" }
   ],
   "games": [
     {
       "date": "2019-04-29",
-      "home": { "playerName": "Brett Johnson", "teamId": "min", "score": 16 },
-      "away": { "playerName": "Scott Johnson", "teamId": "nyj", "score": 14 }
+      "home": { "playerName": "Player1", "teamId": "min", "score": 16 },
+      "away": { "playerName": "Player2", "teamId": "nyj", "score": 14 }
     }
   ]
 }
