@@ -127,10 +127,15 @@ function GameCard({ game, onEdit, onDelete }) {
           onTouchEnd={onTouchEnd}
           onClick={isOpen ? close : undefined}
         >
-          <div className="bg-blue-700 text-white text-sm font-semibold px-4 py-2 flex justify-between items-center">
-            <span className="text-blue-300 text-xs">AWAY</span>
+          <div
+            className="text-white text-sm font-semibold px-4 py-2 flex justify-between items-center"
+            style={{
+              background: `linear-gradient(90deg, ${getTeamById(left?.teamId)?.color ?? '#1e3a8a'}dd 0%, #111114 48%, ${getTeamById(right?.teamId)?.color ?? '#1e3a8a'}dd 100%)`,
+            }}
+          >
+            <span className="text-white/60 text-xs">AWAY</span>
             <span>{dateStr}</span>
-            <span className="text-blue-300 text-xs">HOME</span>
+            <span className="text-white/60 text-xs">HOME</span>
           </div>
           <div className="metallic-dark flex items-stretch">
             <TeamSide entry={left} winner={winner} side="left" />

@@ -29,6 +29,31 @@ export function getRecords(games, players) {
   return records;
 }
 
+// Current active streak per player: { [playerName]: number }
+// Positive = win streak, negative = loss streak. Games must be newest-first.
+export function getCurrentStreak(games, players) {
+  const result = {};
+  for (const p of players) {
+    let streakType = null;
+    let count = 0;
+    for (const g of games) {
+      const entry = g.entries.find(e => e.playerId === p.id);
+      if (!entry) continue;
+      const won = getWinner(g)?.playerId === p.id;
+      if (streakType === null) {
+        streakType = won ? 'win' : 'loss';
+        count = 1;
+      } else if ((won && streakType === 'win') || (!won && streakType === 'loss')) {
+        count++;
+      } else {
+        break;
+      }
+    }
+    result[p.name] = streakType === 'win' ? count : -count;
+  }
+  return result;
+}
+
 // Longest win streak per player: { [playerName]: number }
 export function getLongestWinStreak(games, players) {
   const sorted = [...games].sort((a, b) => new Date(a.date) - new Date(b.date));
