@@ -3,7 +3,7 @@ frontend:
   image:
     repository: ghcr.io/frobobbo/madden-records-frontend
     tag: latest
-    sha: "a7c516c"
+    sha: "d02c3b7"
     pullPolicy: Always
   service:
     type: ClusterIP
@@ -19,7 +19,7 @@ backend:
   image:
     repository: ghcr.io/frobobbo/madden-records-backend
     tag: latest
-    sha: "a7c516c"
+    sha: "d02c3b7"
     pullPolicy: Always
   service:
     type: ClusterIP
