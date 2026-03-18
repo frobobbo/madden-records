@@ -148,8 +148,7 @@ function LastGame({ game, records, streaks, players }) {
           </div>
         </div>
 
-        <div className="absolute inset-y-0 left-0 w-8 bg-black/15 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-8 bg-black/15 pointer-events-none" />
+        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
       </div>
 
       {/* ── Records panel ── */}
