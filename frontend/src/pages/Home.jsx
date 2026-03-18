@@ -105,7 +105,7 @@ function LastGame({ game, records, streaks, players }) {
               {teamA
                 ? <img src={getTeamHelmetUrl(teamA.abbr, 'right')} alt={teamA.name} className="w-28 h-auto object-contain relative z-10" style={{ filter: `drop-shadow(0 6px 18px ${colorA}99)` }} />
                 : <div className="w-24 h-20 rounded bg-black/30" />}
-              <div style={{ width: 72, height: 12, borderRadius: '50%', background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, transparent 72%)', marginTop: -4 }} />
+              <div style={{ width: 115, height: 19, borderRadius: '50%', background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, transparent 72%)', marginTop: -4 }} />
             </div>
             <span
               className="font-black drop-shadow-lg"
@@ -121,7 +121,6 @@ function LastGame({ game, records, streaks, players }) {
 
           {/* Centre */}
           <div className="flex flex-col items-center gap-1 shrink-0">
-            <span className="text-white/40 text-xs font-bold tracking-widest">FINAL</span>
             <div className="h-6 w-px bg-white/20" />
           </div>
 
@@ -134,7 +133,7 @@ function LastGame({ game, records, streaks, players }) {
               {teamB
                 ? <img src={getTeamHelmetUrl(teamB.abbr, 'left')} alt={teamB.name} className="w-28 h-auto object-contain relative z-10" style={{ filter: `drop-shadow(0 6px 18px ${colorB}99)` }} />
                 : <div className="w-24 h-20 rounded bg-black/30" />}
-              <div style={{ width: 72, height: 12, borderRadius: '50%', background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, transparent 72%)', marginTop: -4 }} />
+              <div style={{ width: 115, height: 19, borderRadius: '50%', background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, transparent 72%)', marginTop: -4 }} />
             </div>
             <span
               className="font-black drop-shadow-lg"
