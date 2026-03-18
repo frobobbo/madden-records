@@ -103,7 +103,7 @@ function PlayerEntry({ entry, isHome, onToggleHome, onChange }) {
             <option value="">Select Team...</option>
             {NFL_TEAMS.map(t => <option key={t.id} value={t.id}>{t.name}</option>)}
           </select>
-          <input type="number" min="0" placeholder="Score" value={entry.score} onChange={e => onChange('score', e.target.value)}
+          <input type="number" inputMode="numeric" pattern="[0-9]*" min="0" placeholder="Score" value={entry.score} onChange={e => onChange('score', e.target.value)}
             className="bg-gray-700 border border-gray-600 text-white placeholder-gray-400 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-full" />
         </div>
       </div>
