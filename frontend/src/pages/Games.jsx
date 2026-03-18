@@ -178,7 +178,7 @@ function TeamSide({ entry, winner, side, streak }) {
       <div className={`flex flex-col flex-1 min-w-0 ${isLeft ? 'items-start' : 'items-end'}`}>
         <span className="text-gray-400 text-xs truncate">{entry.playerName}</span>
         {showStreak && (
-          <span className="text-xs font-bold text-amber-400 mt-0.5">🔥 W{streak}</span>
+          <span className="text-xs font-bold text-amber-400 mt-0.5 whitespace-nowrap">🔥 W{streak}</span>
         )}
       </div>
       <span className={`text-3xl font-black shrink-0 ${isWinner ? 'text-white' : 'text-gray-500'}`}>

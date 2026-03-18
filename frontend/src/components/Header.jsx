@@ -16,7 +16,7 @@ export default function Header({ onAdd }) {
           className="absolute inset-y-0 right-0 w-28"
           style={{ background: 'linear-gradient(to left, rgba(6,13,28,0.75) 0%, transparent 100%)' }}
         />
-        <div className="absolute inset-0 flex items-center justify-end px-3">
+        <div className="absolute inset-0 flex items-end justify-end px-3 pb-3">
           <button
             onClick={onAdd}
             className="bg-red-700 active:bg-red-600 text-white font-semibold px-4 py-1.5 rounded-md text-sm transition-colors shadow-lg"
