@@ -1,11 +1,19 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Xball';
+  src: url('./assets/Xball.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Xball', system-ui, -apple-system, sans-serif;
   background: #030712;
 }
