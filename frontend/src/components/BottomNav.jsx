@@ -5,7 +5,6 @@ const tabs = [
   { to: '/records', label: 'Records', icon: TrophyIcon },
   { to: '/games', label: 'Games', icon: ListIcon },
   { to: '/stats', label: 'Stats', icon: BarChartIcon },
-  { to: '/players', label: 'Players', icon: PeopleIcon },
 ];
 
 export default function BottomNav() {
