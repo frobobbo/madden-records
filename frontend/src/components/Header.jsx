@@ -1,6 +1,9 @@
 export default function Header({ onAdd }) {
   return (
-    <header className="metallic-dark flex items-center justify-between px-4 py-3 border-b border-gray-700 sticky top-0 z-10">
+    <header
+      className="metallic-dark flex items-center justify-between px-4 py-3 border-b border-gray-700 sticky top-0 z-10"
+      style={{ paddingTop: 'max(12px, env(safe-area-inset-top))' }}
+    >
       <div className="flex items-center gap-1.5">
         <span className="text-3xl tracking-wide text-white">MADDEN</span>
         <span className="text-xl">🏈</span>
