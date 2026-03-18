@@ -47,17 +47,23 @@ spec:
                   key: password
             - name: PORT
               value: "3001"
+          # Liveness: just checks the process is alive (port open).
+          # Long failure threshold so a slow DB doesn't kill the pod.
           livenessProbe:
-            httpGet:
-              path: /health
-              port: 3001
-            initialDelaySeconds: 15
-            periodSeconds: 20
-          readinessProbe:
             httpGet:
               path: /health
               port: 3001
             initialDelaySeconds: 5
             periodSeconds: 10
+            failureThreshold: 12
+          # Readiness: /health returns 503 until DB migration completes.
+          # Pod stays out of service rotation until it's truly ready.
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3001
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 24
           resources:
             {{- toYaml .Values.backend.resources | nindent 12 }}
