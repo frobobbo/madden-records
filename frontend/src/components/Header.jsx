@@ -1,10 +1,10 @@
 export default function Header({ onAdd }) {
   return (
     <header className="flex items-center justify-between px-4 py-3 bg-gray-900 border-b border-gray-700 sticky top-0 z-10">
-      <div className="flex items-center gap-1">
-        <span className="text-2xl font-black tracking-tight text-white">MADDEN</span>
+      <div className="flex items-center gap-1.5" style={{ fontFamily: "'Anton', sans-serif" }}>
+        <span className="text-3xl tracking-wide text-white">MADDEN</span>
         <span className="text-xl">🏈</span>
-        <span className="text-2xl font-black tracking-tight text-blue-400">RECORDS</span>
+        <span className="text-3xl tracking-wide text-blue-400">RECORDS</span>
       </div>
       <button
         onClick={onAdd}
