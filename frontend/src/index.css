@@ -17,3 +17,21 @@ body {
   font-family: 'Xball', system-ui, -apple-system, sans-serif;
   background: #030712;
 }
+
+/* Metallic surface — cards, modals, list rows */
+.metallic {
+  background: linear-gradient(180deg,
+    #424246 0%,
+    #26262a 45%,
+    #323236 100%
+  );
+}
+
+/* Metallic dark — header, nav, scoreboard body */
+.metallic-dark {
+  background: linear-gradient(180deg,
+    #2e2e32 0%,
+    #16161a 50%,
+    #222226 100%
+  );
+}

@@ -26,13 +26,13 @@ function RecordCard({ title, data, format }) {
     <div className="rounded-xl overflow-hidden shadow-sm border border-gray-700">
       <div className="bg-blue-700 text-white text-sm font-semibold px-4 py-2">{title}</div>
       {sorted.map(([player, value], i) => (
-        <div key={player} className={`flex items-center gap-3 px-4 py-3 bg-gray-800 ${i > 0 ? 'border-t border-gray-700' : ''}`}>
+        <div key={player} className={`flex items-center gap-3 px-4 py-3 metallic ${i > 0 ? 'border-t border-gray-700' : ''}`}>
           <TrophyIcon gold={i === 0} />
           <span className="font-medium text-gray-200 flex-1">{player}</span>
           <span className="text-xl font-bold text-white">{format(value)}</span>
         </div>
       ))}
-      {!sorted.length && <div className="px-4 py-3 bg-gray-800 text-gray-500 text-sm">No data yet</div>}
+      {!sorted.length && <div className="px-4 py-3 metallic text-gray-500 text-sm">No data yet</div>}
     </div>
   );
 }

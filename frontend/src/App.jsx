@@ -46,7 +46,7 @@ export default function App() {
         )}
         {showAdd && players.length < 2 && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-6" onClick={() => setShowAdd(false)}>
-            <div className="bg-gray-800 rounded-2xl p-6 text-center shadow-xl" onClick={e => e.stopPropagation()}>
+            <div className="metallic rounded-2xl p-6 text-center shadow-xl" onClick={e => e.stopPropagation()}>
               <p className="text-2xl mb-2">👤</p>
               <p className="font-semibold text-white mb-1">Need at least 2 players</p>
               <p className="text-sm text-gray-400 mb-4">Go to the Players tab to add players first.</p>

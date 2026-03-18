@@ -136,7 +136,7 @@ function LastGame({ game, records, players }) {
       </div>
 
       {/* ── Records panel ── */}
-      <div className="bg-gray-800 px-5 py-4 border-t border-gray-700">
+      <div className="metallic px-5 py-4 border-t border-gray-700">
         <p className="text-center text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
           Season Record
         </p>

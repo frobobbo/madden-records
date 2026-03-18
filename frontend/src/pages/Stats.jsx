@@ -37,7 +37,7 @@ function StatCard({ title, children }) {
       {rows.length ? rows.map((child, i) => (
         <div key={i} className={i > 0 ? 'border-t border-gray-700' : ''}>{child}</div>
       )) : (
-        <div className="px-4 py-3 bg-gray-800 text-gray-500 text-sm">No data yet</div>
+        <div className="px-4 py-3 metallic text-gray-500 text-sm">No data yet</div>
       )}
     </div>
   );
@@ -45,7 +45,7 @@ function StatCard({ title, children }) {
 
 function TeamStatRow({ player, team, value }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-3 bg-gray-800">
+    <div className="flex items-center gap-3 px-4 py-3 metallic">
       {team && <TeamLogo abbr={team.abbr} size={32} />}
       <div className="flex flex-col flex-1 min-w-0">
         <span className="text-xs text-gray-400">{player}</span>
@@ -58,7 +58,7 @@ function TeamStatRow({ player, team, value }) {
 
 function ScoreStatRow({ player, value }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-3 bg-gray-800">
+    <div className="flex items-center gap-3 px-4 py-3 metallic">
       <div className="w-8 h-8 bg-red-700 rounded flex items-center justify-center text-white font-black text-xs shrink-0">SB</div>
       <div className="flex flex-col flex-1">
         <span className="text-xs text-gray-400">{player}</span>

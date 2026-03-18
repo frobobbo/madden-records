@@ -132,7 +132,7 @@ function GameCard({ game, onEdit, onDelete }) {
             <span>{dateStr}</span>
             <span className="text-blue-300 text-xs">HOME</span>
           </div>
-          <div className="bg-gray-900 flex items-stretch">
+          <div className="metallic-dark flex items-stretch">
             <TeamSide entry={left} winner={winner} side="left" />
             <div className="flex items-center justify-center px-3 shrink-0">
               <span className="text-gray-500 font-bold text-sm">vs</span>
@@ -176,7 +176,7 @@ function TeamSide({ entry, winner, side }) {
 function ConfirmDialog({ onConfirm, onCancel }) {
   return (
     <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-6">
-      <div className="bg-gray-800 rounded-2xl p-6 w-full max-w-xs text-center shadow-2xl border border-gray-700">
+      <div className="metallic rounded-2xl p-6 w-full max-w-xs text-center shadow-2xl border border-gray-700">
         <p className="text-3xl mb-3">🗑️</p>
         <p className="font-bold text-white text-lg mb-1">Delete Game?</p>
         <p className="text-sm text-gray-400 mb-6">This game will be permanently removed.</p>

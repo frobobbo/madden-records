@@ -52,7 +52,7 @@ export default function Players({ players, loading, onAdd, onUpdate, onDelete })
         ) : (
           <div className="flex flex-col gap-2">
             {players.map(p => (
-              <div key={p.id} className="flex items-center bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 shadow-sm">
+              <div key={p.id} className="flex items-center metallic border border-gray-700 rounded-xl px-4 py-3 shadow-sm">
                 <div className="w-9 h-9 rounded-full bg-blue-700 text-white flex items-center justify-center font-bold text-sm mr-3 shrink-0">
                   {p.name[0].toUpperCase()}
                 </div>
@@ -96,7 +96,7 @@ function PlayerModal({ initial, title, error, onSave, onDelete, onClose }) {
 
   return (
     <div className="fixed inset-0 bg-black/60 flex items-end justify-center z-50" onClick={onClose}>
-      <div className="bg-gray-800 w-full max-w-md rounded-t-2xl p-6 pb-10" onClick={e => e.stopPropagation()}>
+      <div className="metallic w-full max-w-md rounded-t-2xl p-6 pb-10" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-lg font-bold text-white">{title}</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-300 text-2xl leading-none">&times;</button>
