@@ -38,5 +38,5 @@ export function getTeamById(id) {
 }
 
 export function getTeamLogoUrl(abbr) {
-  return `https://a.espncdn.com/i/teamlogos/nfl/500/${abbr.toLowerCase()}.png`;
+  return `/logos/${abbr.toUpperCase()}.png`;
 }
