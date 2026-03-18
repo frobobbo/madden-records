@@ -9,7 +9,9 @@ const tabs = [
 
 export default function BottomNav() {
   return (
-    <nav className="metallic-dark fixed bottom-0 left-0 right-0 max-w-md mx-auto flex border-t border-gray-700 z-10">
+    <nav className="metallic-dark fixed bottom-0 left-0 right-0 max-w-md mx-auto flex border-t border-gray-700 z-10 px-2 pb-safe"
+      style={{ paddingBottom: 'max(8px, env(safe-area-inset-bottom))' }}
+    >
       {tabs.map(({ to, label, icon: Icon }) => (
         <NavLink
           key={to}
