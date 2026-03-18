@@ -31,6 +31,8 @@ export async function migrate() {
       team_id VARCHAR(20) NOT NULL,
       score INTEGER NOT NULL CHECK (score >= 0)
     );
+
+    ALTER TABLE game_entries ADD COLUMN IF NOT EXISTS is_home BOOLEAN NOT NULL DEFAULT FALSE;
   `);
 }
 

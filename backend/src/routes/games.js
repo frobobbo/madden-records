@@ -16,7 +16,8 @@ async function fetchGames(whereClause = '', params = []) {
            'playerId', ge.player_id,
            'playerName', p.name,
            'teamId', ge.team_id,
-           'score', ge.score
+           'score', ge.score,
+           'isHome', ge.is_home
          ) ORDER BY ge.id
        ) AS entries
      FROM games g
@@ -60,8 +61,8 @@ router.post('/', async (req, res) => {
     const game = gameRes.rows[0];
     for (const e of entries) {
       await client.query(
-        'INSERT INTO game_entries (game_id, player_id, team_id, score) VALUES ($1, $2, $3, $4)',
-        [game.id, e.playerId, e.teamId, e.score]
+        'INSERT INTO game_entries (game_id, player_id, team_id, score, is_home) VALUES ($1, $2, $3, $4, $5)',
+        [game.id, e.playerId, e.teamId, e.score, e.isHome ?? false]
       );
     }
     await client.query('COMMIT');
@@ -96,8 +97,8 @@ router.put('/:id', async (req, res) => {
     await client.query('DELETE FROM game_entries WHERE game_id = $1', [req.params.id]);
     for (const e of entries) {
       await client.query(
-        'INSERT INTO game_entries (game_id, player_id, team_id, score) VALUES ($1, $2, $3, $4)',
-        [req.params.id, e.playerId, e.teamId, e.score]
+        'INSERT INTO game_entries (game_id, player_id, team_id, score, is_home) VALUES ($1, $2, $3, $4, $5)',
+        [req.params.id, e.playerId, e.teamId, e.score, e.isHome ?? false]
       );
     }
     await client.query('COMMIT');

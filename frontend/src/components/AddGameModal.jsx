@@ -6,6 +6,8 @@ export default function AddGameModal({ players, onAdd, onClose }) {
   const [entries, setEntries] = useState(
     players.map(p => ({ playerId: p.id, playerName: p.name, teamId: '', score: '' }))
   );
+  // Track which playerId is the home player (null = not set yet)
+  const [homePlayerId, setHomePlayerId] = useState(null);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
 
@@ -15,6 +17,7 @@ export default function AddGameModal({ players, onAdd, onClose }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (homePlayerId === null) { setError('Select Home or Away for each player'); return; }
     for (const entry of entries) {
       if (!entry.teamId) { setError(`Select a team for ${entry.playerName}`); return; }
       const s = parseInt(entry.score, 10);
@@ -26,7 +29,12 @@ export default function AddGameModal({ players, onAdd, onClose }) {
     try {
       await onAdd({
         date,
-        entries: entries.map(e => ({ playerId: e.playerId, teamId: e.teamId, score: parseInt(e.score, 10) })),
+        entries: entries.map(e => ({
+          playerId: e.playerId,
+          teamId: e.teamId,
+          score: parseInt(e.score, 10),
+          isHome: e.playerId === homePlayerId,
+        })),
       });
       onClose();
     } catch (err) {
@@ -50,7 +58,13 @@ export default function AddGameModal({ players, onAdd, onClose }) {
               className="w-full bg-gray-700 border border-gray-600 text-white rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
           </div>
           {entries.map((entry, idx) => (
-            <PlayerEntry key={entry.playerId} entry={entry} onChange={(f, v) => setEntry(idx, f, v)} />
+            <PlayerEntry
+              key={entry.playerId}
+              entry={entry}
+              isHome={homePlayerId === entry.playerId}
+              onToggleHome={() => setHomePlayerId(entry.playerId)}
+              onChange={(f, v) => setEntry(idx, f, v)}
+            />
           ))}
           {error && <p className="text-red-400 text-sm">{error}</p>}
           <button type="submit" disabled={saving}
@@ -63,11 +77,24 @@ export default function AddGameModal({ players, onAdd, onClose }) {
   );
 }
 
-function PlayerEntry({ entry, onChange }) {
+function PlayerEntry({ entry, isHome, onToggleHome, onChange }) {
   const selected = NFL_TEAMS.find(t => t.id === entry.teamId);
   return (
-    <div className="border border-gray-600 rounded-xl p-4">
-      <p className="font-semibold text-gray-100 mb-3">{entry.playerName}</p>
+    <div className={`border rounded-xl p-4 transition-colors ${isHome ? 'border-green-500/60 bg-green-950/30' : 'border-gray-600'}`}>
+      <div className="flex items-center justify-between mb-3">
+        <p className="font-semibold text-gray-100">{entry.playerName}</p>
+        <button
+          type="button"
+          onClick={onToggleHome}
+          className={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${
+            isHome
+              ? 'bg-green-600 text-white'
+              : 'bg-gray-700 text-gray-400 hover:text-gray-200'
+          }`}
+        >
+          {isHome ? '🏠 HOME' : '✈️ AWAY'}
+        </button>
+      </div>
       <div className="flex gap-3 items-center">
         {selected && <img src={getTeamLogoUrl(selected.abbr)} alt={selected.name} className="w-10 h-10 object-contain shrink-0" />}
         <div className="flex flex-col gap-2 flex-1">

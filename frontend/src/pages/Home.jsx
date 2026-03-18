@@ -27,7 +27,9 @@ export default function Home({ games, players, loading }) {
 function LastGame({ game, records, players }) {
   const winner = getWinner(game);
   const dateStr = formatDate(game.date);
-  const [entryA, entryB] = game.entries;
+  // Away on left, Home on right
+  const entryA = game.entries.find(e => !e.isHome) ?? game.entries[0];
+  const entryB = game.entries.find(e => e.isHome) ?? game.entries[1];
   const teamA = getTeamById(entryA?.teamId);
   const teamB = getTeamById(entryB?.teamId);
   const aWins = winner?.playerId === entryA?.playerId;
@@ -66,10 +68,10 @@ function LastGame({ game, records, players }) {
         </div>
 
         {/* Date bar */}
-        <div className="relative z-10 bg-black/50 text-center py-1.5 px-4">
-          <span className="text-white/80 text-xs font-semibold tracking-widest uppercase">
-            Last Game · {dateStr}
-          </span>
+        <div className="relative z-10 bg-black/50 py-1.5 px-4 flex justify-between items-center">
+          <span className="text-white/50 text-xs font-semibold tracking-widest uppercase">AWAY</span>
+          <span className="text-white/80 text-xs font-semibold tracking-widest uppercase">Last Game · {dateStr}</span>
+          <span className="text-white/50 text-xs font-semibold tracking-widest uppercase">HOME</span>
         </div>
 
         {/* Main scoreboard */}

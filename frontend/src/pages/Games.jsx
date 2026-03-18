@@ -47,10 +47,16 @@ export default function Games({ games, loading, onUpdate, onDelete }) {
   );
 }
 
+function awayHome(entries) {
+  const home = entries.find(e => e.isHome) ?? entries[1];
+  const away = entries.find(e => !e.isHome) ?? entries[0];
+  return [away, home];
+}
+
 function GameCard({ game, onEdit, onDelete }) {
   const winner = getWinner(game);
   const dateStr = formatDate(game.date);
-  const [left, right] = game.entries;
+  const [left, right] = awayHome(game.entries);
 
   const [offset, setOffset] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -121,8 +127,10 @@ function GameCard({ game, onEdit, onDelete }) {
           onTouchEnd={onTouchEnd}
           onClick={isOpen ? close : undefined}
         >
-          <div className="bg-blue-700 text-white text-sm font-semibold px-4 py-2">
-            {dateStr}
+          <div className="bg-blue-700 text-white text-sm font-semibold px-4 py-2 flex justify-between items-center">
+            <span className="text-blue-300 text-xs">AWAY</span>
+            <span>{dateStr}</span>
+            <span className="text-blue-300 text-xs">HOME</span>
           </div>
           <div className="bg-gray-900 flex items-stretch">
             <TeamSide entry={left} winner={winner} side="left" />
