@@ -80,12 +80,11 @@ function TeamSide({ entry, winner, side }) {
     <div className={`flex-1 flex ${isLeft ? 'flex-row' : 'flex-row-reverse'} items-center gap-2 px-3 py-3`}>
       {/* Logo */}
       <div className="shrink-0">
-        {team ? <TeamLogo abbr={team.abbr} size={40} /> : <div className="w-10 h-10 bg-gray-700 rounded-full" />}
+        {team ? <TeamLogo abbr={team.abbr} size={52} /> : <div className="w-13 h-13 bg-gray-700 rounded-full" />}
       </div>
       {/* Name + team */}
       <div className={`flex flex-col flex-1 min-w-0 ${isLeft ? 'items-start' : 'items-end'}`}>
         <span className="text-gray-400 text-xs truncate">{entry.playerName}</span>
-        <span className="text-gray-300 text-xs truncate">{team?.name ?? 'Unknown'}</span>
       </div>
       {/* Score */}
       <span className={`text-3xl font-black shrink-0 ${isWinner ? 'text-white' : 'text-gray-500'}`}>
