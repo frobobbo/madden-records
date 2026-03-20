@@ -42,8 +42,8 @@ export function getTeamLogoUrl(abbr) {
 }
 
 // direction: 'left' | 'right'
-// Away (left side of screen) → right-facing helmet (faces inward)
-// Home (right side of screen) → left-facing helmet (faces inward)
+// Away (left side of screen) → left-facing helmet (faces inward)
+// Home (right side of screen) → right-facing helmet (faces inward)
 export function getTeamHelmetUrl(abbr, direction = 'right') {
   return `/helmets/${abbr.toLowerCase()}_${direction}.webp`;
 }
