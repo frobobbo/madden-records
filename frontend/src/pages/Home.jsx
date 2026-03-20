@@ -80,14 +80,18 @@ function FieldCard({ game }) {
         </div>
 
         {/* Scoreboard */}
-        <div className="relative z-10 flex items-center justify-between px-4 py-6 gap-2">
+        <div
+          key={game.id}
+          className="relative z-10 flex items-center justify-between px-4 py-6 gap-2"
+          style={{ animation: 'crash-impact 1.4s ease-out both' }}
+        >
 
           {/* Away */}
           <div className="flex-1 flex flex-col items-center gap-2">
             <span className="font-bold text-sm text-white text-center drop-shadow-lg">{entryA?.playerName}</span>
             <div className="flex flex-col items-center">
               {teamA
-                ? <img src={getTeamHelmetUrl(teamA.abbr, 'left')} alt={teamA.name} className="w-28 h-auto object-contain relative z-10" style={{ filter: `drop-shadow(0 6px 18px ${colorA}99)`, transform: 'rotate(12deg)' }} />
+                ? <img src={getTeamHelmetUrl(teamA.abbr, 'left')} alt={teamA.name} className="w-28 h-auto object-contain relative z-10" style={{ filter: `drop-shadow(0 6px 18px ${colorA}99)`, animation: 'helmet-rush-left 1.4s ease-out both' }} />
                 : <div className="w-24 h-20 rounded bg-black/30" />}
               <div style={{ width: 115, height: 19, borderRadius: '50%', background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, transparent 72%)', marginTop: -4 }} />
             </div>
@@ -106,7 +110,7 @@ function FieldCard({ game }) {
             <span className="font-bold text-sm text-white text-center drop-shadow-lg">{entryB?.playerName}</span>
             <div className="flex flex-col items-center">
               {teamB
-                ? <img src={getTeamHelmetUrl(teamB.abbr, 'right')} alt={teamB.name} className="w-28 h-auto object-contain relative z-10" style={{ filter: `drop-shadow(0 6px 18px ${colorB}99)`, transform: 'rotate(-12deg)' }} />
+                ? <img src={getTeamHelmetUrl(teamB.abbr, 'right')} alt={teamB.name} className="w-28 h-auto object-contain relative z-10" style={{ filter: `drop-shadow(0 6px 18px ${colorB}99)`, animation: 'helmet-rush-right 1.4s ease-out both' }} />
                 : <div className="w-24 h-20 rounded bg-black/30" />}
               <div style={{ width: 115, height: 19, borderRadius: '50%', background: 'radial-gradient(ellipse at center, rgba(0,0,0,0.55) 0%, transparent 72%)', marginTop: -4 }} />
             </div>
